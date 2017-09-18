@@ -132,3 +132,18 @@ $(function() {
         $('body').toggleClass('menu-hidden');
     });
 }());
+function menuclickchangingvisibility()
+    {
+                //if menu-hidden class present means menu is absent
+        if ($('body').attr('class')==='menu-hidden'){
+            $('.icon-list').on("click",function(){
+                alert("ok");
+                return (($('body').attr('class'))==='menu-hidden');
+            });
+        }
+        else{
+            $('.icon-list').on("click",function(){
+                return (($('body').attr('class'))==='');
+            });
+        }
+    }
