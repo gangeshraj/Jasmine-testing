@@ -69,10 +69,11 @@ function init() {
                  entries.forEach(function(entry) {
                      container.append(entryTemplate(entry));
                  });
-
+setTimeout(function(){
                  if (cb) {
                      cb();
                  }
+             },1);
                },
        error: function (result, status, err){
                  //run only the callback without attempting to parse result due to error
@@ -132,18 +133,3 @@ $(function() {
         $('body').toggleClass('menu-hidden');
     });
 }());
-function menuclickchangingvisibility()
-    {
-                //if menu-hidden class present means menu is absent
-        if ($('body').attr('class')==='menu-hidden'){
-            $('.icon-list').on("click",function(){
-                alert("ok");
-                return (($('body').attr('class'))==='menu-hidden');
-            });
-        }
-        else{
-            $('.icon-list').on("click",function(){
-                return (($('body').attr('class'))==='');
-            });
-        }
-    }

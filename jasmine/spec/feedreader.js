@@ -35,6 +35,8 @@ $(function() {
             for(i=0;i<allFeeds.length;++i)
             {
                 expect(allFeeds[i].url).toBeDefined();
+                expect(allFeeds[i].url.length).not.toBe(0);
+                expect(allFeeds[i].url).not.toBe(null);
             }
          });
 
@@ -47,6 +49,8 @@ $(function() {
             for(i=0;i<allFeeds.length;++i)
             {
                 expect(allFeeds[i].name).toBeDefined();
+                expect(allFeeds[i].name.length).not.toBe(0);
+                expect(allFeeds[i].name).not.toBe(null);
             }
          });
     });
@@ -59,7 +63,7 @@ $(function() {
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
-         it("menu element hidden",function(){
+         it("menu element hidden default",function(){
             expect($('body').attr('class')).toBe('menu-hidden');
          });
 
@@ -71,10 +75,14 @@ $(function() {
           */
           it("menu click changing visibility",function(){
             //if menu-hidden class present means menu is absent
-                expect(menuclickchangingvisibility()).toBe(true);
+           $('.icon-list').click();//on click it should display
+           expect($('body').attr('class')).not.toBe('menu-hidden');
+
+           $('.icon-list').click();//on again click it should hide
+           expect($('body').attr('class')).toBe('menu-hidden');
          });
       });
-
+let originalTimeout=0;
     /* TODO: Write a new test suite named "Initial Entries" */
     describe("Initial Entries",function(){
 
@@ -84,6 +92,13 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+         beforeEach(function(done){
+            loadFeed(0,done);
+         });
+         it('checks atleast single entry within .feed',function(done){
+         expect($('.feed').length>0).toBe(true);
+         done();
+     });
      });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
@@ -93,5 +108,20 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+         let firstload;
+         let secondload
+         beforeEach(function(done){
+                loadFeed(0,function(){//nesting
+                    firstload=$('.feed').html();
+                        loadFeed(1,function(){
+                        secondload=$('.feed').html();
+                        done();
+                    });
+                });
+         });
+
+         it("new feed changes the .feed container content",function(){
+                expect(firstload).not.toEqual(secondload);
+            });
          });
 }());
