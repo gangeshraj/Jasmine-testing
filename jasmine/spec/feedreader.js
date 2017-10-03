@@ -95,7 +95,7 @@ let originalTimeout=0;
             loadFeed(0,done);
          });
          it('checks atleast single entry within .feed',function(done){
-         expect($('.feed').length>0).toBe(true);
+         expect($('.feed .entry').length>0).toBe(true);
          done();
      });
      });
@@ -113,8 +113,8 @@ let originalTimeout=0;
                 loadFeed(0,function(){//nesting
                     firstload=$('.feed').html();
                         loadFeed(1,function(){
-                        secondload=$('.feed').html();
-                        done();
+                            secondload=$('.feed').html();
+                            done();
                     });
                 });
          });
